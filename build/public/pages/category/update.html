@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+  <!-- jQuery library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+  <!-- Latest compiled JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+  <link rel="stylesheet" href="./update.css">
+
+  <script src="https://www.gstatic.com/firebasejs/5.7.2/firebase.js"></script>
+  <script>
+    // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyCm5v1BHebYbfE6Gdyf3C69bh6588XMNQg",
+    authDomain: "tmp-vue.firebaseapp.com",
+    databaseURL: "https://tmp-vue.firebaseio.com",
+    projectId: "tmp-vue",
+    storageBucket: "tmp-vue.appspot.com",
+    messagingSenderId: "771462561137"
+  };
+  firebase.initializeApp(config);
+  </script>
+
+  <title>webpack starterkit</title>
+</head>
+
+<body>
+  <div class="loading">Loading&#8230;</div>
+  <div class="container">
+    <div class="alert showAlert">
+    </div>
+    <button class="btn btn-primary" type="button" id="back">回上一頁</button>
+    <a href="" class="btn btn-danger" id="deleteRange" data-toggle="modal" data-target="#myModalNorm">刪除此分類<i class="fa fa-spinner fa-spin"
+        id="deleteSpinner" style="display: none; margin-left: 10px; font-size:12px"></i></a>
+    <div class="row section-add-category">
+      <div class="col-xs-12">
+        <h2>修改分類</h2>
+        <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
+          <div class="form-group">
+            <label class="control-label col-md-3 col-sm-3 col-xs-12">英文編號：</label>
+            <div class="dropdown col-md-3 col-sm-3 col-xs-12">
+              <select class="form-control" id="category" disabled>
+                <option value="" selected disabled hidden>請選擇</option>
+                <option>A</option>
+                <option>B</option>
+                <option>C</option>
+                <option>D</option>
+                <option>E</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-md-3 col-sm-3 col-xs-12">分類名稱：</label>
+            <div class="col-sm-6 col-xs-12">
+              <input type="text" class="form-control" id="name" value="">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-md-3 col-sm-3 col-xs-12">分類描述：</label>
+            <div class="col-sm-6 col-xs-12">
+              <input type="text" class="form-control" id="description" value="">
+            </div>
+          </div>
+          <div class="form-group">
+              <label class="control-label col-md-3 col-sm-3 col-xs-12">最低值（金額）：</label>
+              <div class="col-sm-6 col-xs-12">
+                <input type="number" min="0" class="form-control" id="lower_bound" value="">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3 col-sm-3 col-xs-12">中間值（金額）：</label>
+              <div class="col-sm-6 col-xs-12">
+                <input type="number" min="0" class="form-control" id="medium" value="">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3 col-sm-3 col-xs-12">最高值（金額）：</label>
+              <div class="col-sm-6 col-xs-12">
+                <input type="number" min="0" class="form-control" id="upper_bound" value="">
+              </div>
+            </div>
+          <div class="form-group">
+            <label class="control-label col-md-3 col-sm-3 col-xs-12">圖示</label>
+            <div class="col-sm-6 col-xs-12">
+              <input type="file" id="fileButton">
+              <img src="" id="cate_img" alt="">
+              <i class="fa fa-spinner fa-spin" id="addPhotoSpinner" style="display: none; margin-left: 20px; margin-top: 20px; font-size:12px"></i>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+              <button class="btn btn-primary" type="button" id="addCategoryBtn">送出<i class="fa fa-spinner fa-spin" id="addSpinner"
+                  style="display: none; margin-left: 10px; font-size:12px"></i></button>
+            </div>
+
+          </div>
+        </form>
+      </div>
+    </div>
+    <hr>
+  </div>
+  <!-- Modal -->
+  <div class="modal fade" id="myModalNorm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">
+            <span aria-hidden="true">&times;</span>
+            <span class="sr-only">Close</span>
+          </button>
+          <h4 class="modal-title" id="myModalLabel">
+            確定要刪除嗎
+          </h4>
+        </div>
+        <!-- Modal Footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">
+            取消
+          </button>
+          <button type="button" id="deleteConfirm" data-dismiss="modal" class="btn btn-primary">
+            確定
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+<script src="./update.js"></script>
+<!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script> -->
+
+</html>

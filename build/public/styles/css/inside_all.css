@@ -1,0 +1,164 @@
+/* line 2, ../sass/_common.scss */
+
+.nav.side-menu>li.active,
+.nav.side-menu>li.current-page {
+    border-right: 0px solid #1ABB9C;
+}
+
+
+/* line 7, ../sass/_common.scss */
+
+.nav.side-menu>li.active>a {
+    background: #203040;
+    box-shadow: inset 0px 1px 4px 0px #192532;
+}
+
+
+/* line 12, ../sass/_common.scss */
+
+.nav.side-menu>li:hover {
+    background: #203040;
+}
+
+
+/* line 16, ../sass/_common.scss */
+
+.nav.side-menu>li>a {
+    margin-bottom: 0px;
+}
+
+
+/* line 21, ../sass/_common.scss */
+
+.breadcrumb>li+li:before {
+    padding: 0 5px;
+    color: #ccc;
+    content: " > ";
+}
+
+
+/* line 29, ../sass/_common.scss */
+
+.nav-md .container.body .whole {
+    margin-left: 0px;
+    padding: 10px 20px 0;
+    max-width: 1080px;
+    margin: 0 auto;
+    background: transparent;
+}
+
+
+/* line 39, ../sass/_common.scss */
+
+h6.webhook-title {
+    font-size: 19px !important;
+    letter-spacing: 0.01em;
+    padding: 0 0 6px 0;
+}
+
+
+/* line 45, ../sass/_common.scss */
+
+p.webhook-info {
+    text-align: left;
+    max-width: 350px;
+    padding: 0 10px;
+}
+
+
+/* line 51, ../sass/_common.scss */
+
+.nav.child_menu>li>a,
+.nav.side-menu>li>a {
+    margin-bottom: 0px;
+}
+
+
+/* line 8, ../sass/all.scss */
+
+::selection {
+    background: #acd9fb;
+    color: #fff;
+}
+
+
+/* i18n */
+
+.nav-user-lang.open .dropdown-menu {
+    width: 100%;
+    min-width: 100%;
+}
+
+
+.help-message {
+    display: inline-block;
+}
+
+.help-message > div {
+    display: none;
+    background: rgb(249, 249, 249);
+    color: black;
+
+    padding: 2px 4px;
+    border: 1px black solid;
+    margin: 2px;
+
+    position: absolute;
+    top: 24px;
+    right: 14px;
+
+    z-index: 100;
+}
+
+.help-message > .fa-question-circle:hover ~ div {
+    display: block;
+}
+
+@media screen {
+
+    .copyright p {
+        line-height: 20px;
+        font-size: 14px;
+        padding: 0 20px 0 0;
+    }
+
+    @media (max-width: 768px){
+        .copyright p.split-bar {
+            display: none;
+        }
+
+        footer {
+            display: flex;
+            justify-content: center;
+        }
+
+        .copyright p {
+            text-align: center;
+        }
+    }   
+
+    @media (min-width: 768px){
+        .copyright p {
+            float: left;
+            text-align: left;
+        }
+    }
+}
+
+i.form-required:before {
+    content: "*";
+    color: red;
+    float: left;
+    margin-left: -5px;
+    margin-top: 10px;
+}
+
+.customer-service-warning-window {
+    position: fixed;
+    right: 5px;
+    bottom: 60px;
+    border: black 1px solid;
+    padding: 5px;
+    background: gray;
+    color: white;
+}

@@ -1,0 +1,37 @@
+.container {
+  margin-top: 60px;
+}
+
+.product-img {
+  width: 50px;
+}
+
+.showAlert {
+  display: none;
+}
+
+.show {
+  display: block;
+}
+
+.section-add-price {
+  position: relative;
+  margin: 10px;
+  border: 1px solid lightgray;
+  padding-top: 40px;
+  margin-top: 40px;
+  box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.section-add-price h2 {
+  position: absolute;
+  background-color: #d9edf7;
+  border-color: #bce8f1;
+  color: #31708f;
+  height: auto;
+  margin-left: 5px;
+  padding: 5px 10px;
+  position: absolute;
+  margin-top: -60px;
+  border-radius: 15px;
+}

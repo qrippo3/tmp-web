@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+  <!-- jQuery library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+  <!-- Latest compiled JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.11/lodash.min.js"></script>
+  <link rel="stylesheet" href="./index.css">
+
+
+  <script src="https://www.gstatic.com/firebasejs/5.7.2/firebase.js"></script>
+  <script>
+    // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyCm5v1BHebYbfE6Gdyf3C69bh6588XMNQg",
+    authDomain: "tmp-vue.firebaseapp.com",
+    databaseURL: "https://tmp-vue.firebaseio.com",
+    projectId: "tmp-vue",
+    storageBucket: "tmp-vue.appspot.com",
+    messagingSenderId: "771462561137"
+  };
+  firebase.initializeApp(config);
+  console.log(firebase);
+</script>
+
+  <title>webpack starterkit</title>
+</head>
+
+<body>
+  
+  <div class="container">
+    <div class="alert showAlert">
+    </div>
+    <div class="row section-add-category">
+      <div class="col-xs-12">
+        <h2>新增分類</h2>
+        <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
+          <div class="form-group">
+            <label class="control-label col-md-3 col-sm-3 col-xs-12">英文編號：</label>
+            <div class="dropdown col-md-3 col-sm-3 col-xs-12">
+              <select class="form-control" id="category">
+                <option value="" selected disabled hidden>請選擇</option>
+                <option>A</option>
+                <option>B</option>
+                <option>C</option>
+                <option>D</option>
+                <option>E</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-md-3 col-sm-3 col-xs-12">分類名稱：</label>
+            <div class="col-sm-6 col-xs-12">
+              <input type="text" class="form-control" id="title" value="">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-md-3 col-sm-3 col-xs-12">分類描述：</label>
+            <div class="col-sm-6 col-xs-12">
+              <input type="text" class="form-control" id="description" value="">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-md-3 col-sm-3 col-xs-12">圖示</label>
+            <div class="col-sm-6 col-xs-12">
+              <input type="file" id="fileButton">
+              <img src="" id="cate_img" alt="">
+              <i class="fa fa-spinner fa-spin" id="addPhotoSpinner"
+                  style="display: none; margin-left: 20px; margin-top: 20px; font-size:12px"></i>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+              <button class="btn btn-primary" type="button" id="addCategoryBtn">完成<i class="fa fa-spinner fa-spin" id="addSpinner"
+                  style="display: none; margin-left: 10px; font-size:12px"></i></button>
+            </div>
+            
+          </div>
+        </form>
+      </div>
+    </div>
+    <hr>
+    <div class="row section-add-category">
+      <div class="col-xs-12">
+        <h2>分類列表</h2>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>英文編號</th>
+              <th>分類名稱</th>
+              <th>分類描述</th>
+              <th>最低值（金額）</th>
+              <th>中間值（金額）</th>
+              <th>最高值（金額）</th>
+              <th>圖示</th>
+            </tr>
+          </thead>
+          <tbody class="category-table-body"></tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
+</body>
+<script src="./index.js?v=1"></script>
+<!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script> -->
+
+</html>
