@@ -229,7 +229,7 @@ async function updateProduct(body) {
     body: JSON.stringify(body)
   }
   console.log(option);
-  let categories = await fetch('https://flashboxlaunch.herokuapp.com/product', option);
+  let categories = await fetch('https://medfirst-sx.herokuapp.com/product', option);
   let data = await categories.text();
   console.log('updateProduct', data);
   return data;
@@ -245,7 +245,7 @@ async function deleteProduct(p_id) {
       method: "delete",
     };
     let result = await fetch(
-      `https://flashboxlaunch.herokuapp.com/product/${p_id}`,
+      `https://medfirst-sx.herokuapp.com/product/${p_id}`,
       option
     );
 

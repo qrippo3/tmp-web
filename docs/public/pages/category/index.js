@@ -149,7 +149,7 @@ class UI {
 
 async function getCategory() {
   let categories = await fetch(
-    `https://flashboxlaunch.herokuapp.com/categories`
+    `https://medfirst-sx.herokuapp.com/categories`
   );
   let data = await categories.text();
   return data;
@@ -172,7 +172,7 @@ async function postCategory() {
       })
     };
     let categories = await fetch(
-      `https://flashboxlaunch.herokuapp.com/categories`,
+      `https://medfirst-sx.herokuapp.com/categories`,
       option
     );
     let data = await categories.text();
@@ -183,7 +183,7 @@ async function postCategory() {
 }
 
 async function getPriceRange() {
-  let categories = await fetch('https://flashboxlaunch.herokuapp.com/pricerange');
+  let categories = await fetch('https://medfirst-sx.herokuapp.com/pricerange');
   let data = await categories.text();
   return data;
 }
@@ -197,7 +197,7 @@ async function createPriceRange(body) {
     method: 'post',
     body: JSON.stringify(body)
   }
-  let categories = await fetch('https://flashboxlaunch.herokuapp.com/pricerange', option);
+  let categories = await fetch('https://medfirst-sx.herokuapp.com/pricerange', option);
   let data = await categories.text();
   return data;
 }

@@ -196,7 +196,7 @@ class UI {
 })();
 
 async function getProduct(mark) {
-  let categories = await fetch(`https://flashboxlaunch.herokuapp.com/products?mark=${mark}`);
+  let categories = await fetch(`https://medfirst-sx.herokuapp.com/products?mark=${mark}`);
   let data = await categories.text();
   return data;
 }
@@ -210,7 +210,7 @@ async function postProduct(body) {
     method: 'post',
     body: JSON.stringify(body)
   }
-  let categories = await fetch('https://flashboxlaunch.herokuapp.com/product', option);
+  let categories = await fetch('https://medfirst-sx.herokuapp.com/product', option);
   return categories;
 }
 
@@ -223,7 +223,7 @@ async function postPriceRange(body) {
     method: 'post',
     body: JSON.stringify(body)
   }
-  let categories = await fetch('https://flashboxlaunch.herokuapp.com/pricerange', option);
+  let categories = await fetch('https://medfirst-sx.herokuapp.com/pricerange', option);
   let data = await categories.text();
   return data;
 }
