@@ -92,7 +92,7 @@ class UI {
         "priority_order": parseInt(product_priority_order),
       }
       let images = [];
-      $('.panel-body li img').each((index, item)=>{
+      $('.panel-body li img').each((index, item) => {
         console.log(item.src, index)
         images.push({
           "image_url": item.src,
@@ -108,7 +108,8 @@ class UI {
           let response = await getProduct(mark);
           products = JSON.parse(response)
           ui.renderProductList(products);
-          
+          $("#addSpinner").hide();
+
         } else {
           ui.showAlertMsg('新增失敗', 'alert-danger')
           $("#addSpinner").hide();
