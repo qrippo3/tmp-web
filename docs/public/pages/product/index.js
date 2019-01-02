@@ -1,10 +1,8 @@
 class UI {
   constructor() {}
   renderProductList(products) {
-    console.log(products);
     $(".category-table-body").empty();
     $.each(products, function (key, value) {
-      console.log(value);
       $(".category-table-body").append(`
         <tr>
           <th>${value.name}</th>
@@ -48,29 +46,16 @@ class UI {
 
   $('#addPhoto').click(e => {
     e.preventDefault();
-    // Ply.dialog('prompt', {
-    // 	title: 'Add',
-    // 	form: { name: 'name' }
-    // }).done(function (ui) {
-    // 	var el = document.createElement('li');
-    // 	el.innerHTML = ui.data.name + '<i class="js-remove">✖</i>';
-    // 	editableList.el.appendChild(el);
-    // });
     document.getElementById("product_photo_url_0").click();
   })
 
   let ui = new UI();
-
   const urlParams = new URLSearchParams(window.location.search);
   const mark = urlParams.get('mark');
-  const title = urlParams.get('title');
   const category_id = urlParams.get('category_id');
-  // $('#product_name').val(title);
-
   let response = await getProduct(mark);
   let products = JSON.parse(response)
   ui.renderProductList(products);
-
 
   $('#form-submit').click(event => {
     $("#addSpinner").show();
@@ -79,13 +64,6 @@ class UI {
     let description = $("#description").val();
     let product_code = $('#product_code').val();
     let product_priority_order = $('#product_priority_order').val()
-    console.log(name, price, description, product_code);
-
-    $('.panel-body').children('.li').children('.div').each((index, item) => {
-      console.log(item, index);
-      console.log($(item).find(`#order${index}`).val());
-      console.log($(item).find(`#product_photo_url_${index}`).val());
-    });
 
     if (
       typeof name == "undefined" ||
@@ -121,24 +99,20 @@ class UI {
           "priority_order": index
         })
       })
-      // $('.panel-body').children('.li').children('.div').each((index, item) => {
-      //   console.log(item, index);
-      //   console.log($(item).find(`#order${index}`).val());
-      //   console.log($(item).find(`#product_photo_url_${index}`).val());
-      //   images.push({
-      //     "image_url": $(item).find(`#product_photo_url_${index}`).attr("data-imgUrl"),
-      //     "priority_order": parseInt($(item).find(`#order${index}`).val())
-      //   })
-      // });
-      // debugger
+
       body['images'] = images
       postProduct(body).
-      then(async data => {
-        ui.showAlertMsg('新增成功', 'alert-success')
-        let response = await getProduct(mark);
-        products = JSON.parse(response)
-        ui.renderProductList(products);
-        $("#addSpinner").hide();
+      then(async response => {
+        if (response.status >= 200 && response.status < 300) {
+          ui.showAlertMsg('新增成功', 'alert-success')
+          let response = await getProduct(mark);
+          products = JSON.parse(response)
+          ui.renderProductList(products);
+          
+        } else {
+          ui.showAlertMsg('新增失敗', 'alert-danger')
+          $("#addSpinner").hide();
+        }
       })
     }
   })
@@ -163,32 +137,10 @@ class UI {
   $('.category-table-body').on('click', '.btn-modify', function () {
     let product_id = $(this).data("id");
     let index = $(this).parent().parent().index()
-    // console.log(products[index]);
     setCookie(product_id, products[index], 10 * 60);
     debugger;
     window.location.href = `./update.html?product_id=${product_id}`;
-    // $(this).find('.fa').show();
-    // let category_id = $(this).data("id");
-    // deleteProduct(category_id).
-    // then(response => {
-    //   if (response.status >= 200 && response.status < 300) {
-    //     $(this).parents('tr').first().remove();
-    //   }
-    //   $(this).find('.fa').hide();
-    // })
   })
-
-  // $('.panel-body').on('click', '.btn-delete', function () {
-  //   $(this).find('.fa').show();
-  //   let category_id = $(this).data("id");
-  //   deleteCategory(category_id).
-  //   then(response => {
-  //     if (response.status >= 200 && response.status < 300) {
-  //       $(this).parents('tr').first().remove();
-  //     }
-  //     $(this).find('.fa').hide();
-  //   })
-  // });
 
   $('#back').click(event => {
     window.location.replace("../category/index.html");
@@ -210,22 +162,12 @@ class UI {
         </div>
       </div>
     `)
-    console.log($('.panel-body .image-row').length);
   })
 
 
   $(document).on('change', "input[type='file']", function (e) {
 
     $('.loading').show();
-    // setTimeout(() => {
-    //   var el = document.createElement('li');
-    //   el.innerHTML = `<div><img src="https://loremflickr.com/320/240?random=${Math.random()}"><i class="js-remove">✖</i></div>`;
-    //   editableList.el.appendChild(el);
-    //   $('.loading').hide();
-    // }, 1000);
-
-
-    // return;
     var _this = $(this);
     var file = e.target.files[0];
     var metadata = {
@@ -236,16 +178,6 @@ class UI {
     var uploadTask = storageRef.child('images/' + file.name).put(file, metadata);
     uploadTask.on('state_changed', function (snapshot) {
       $('#addPhotoSpinner').show();
-      var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-      console.log('Upload is ' + progress + '% done');
-      switch (snapshot.state) {
-        case firebase.storage.TaskState.PAUSED: // or 'paused'
-          console.log('Upload is paused');
-          break;
-        case firebase.storage.TaskState.RUNNING: // or 'running'
-          console.log('Upload is running');
-          break;
-      }
     }, function (error) {
 
     }, function () {
@@ -257,8 +189,6 @@ class UI {
         el.innerHTML = `<div><img src="${downloadURL}"><i class="js-remove">✖</i></div>`;
         editableList.el.appendChild(el);
         $('.loading').hide();
-
-        // });
       });
     });
   });
@@ -266,14 +196,12 @@ class UI {
 })();
 
 async function getProduct(mark) {
-  let categories = await fetch(`https://medfirst-sx.herokuapp.com/products?mark=${mark}`);
+  let categories = await fetch(`https://flashboxlaunch.herokuapp.com/products?mark=${mark}`);
   let data = await categories.text();
-  // console.log(data);
   return data;
 }
 
 async function postProduct(body) {
-  console.log(body);
   let option = {
     headers: {
       'Accept': 'application/json',
@@ -282,11 +210,8 @@ async function postProduct(body) {
     method: 'post',
     body: JSON.stringify(body)
   }
-  console.log(option);
-  let categories = await fetch('https://medfirst-sx.herokuapp.com/product', option);
-  let data = await categories.text();
-  console.log('postProduct', data);
-  return data;
+  let categories = await fetch('https://flashboxlaunch.herokuapp.com/product', option);
+  return categories;
 }
 
 async function postPriceRange(body) {
@@ -298,33 +223,7 @@ async function postPriceRange(body) {
     method: 'post',
     body: JSON.stringify(body)
   }
-  let categories = await fetch('https://medfirst-sx.herokuapp.com/pricerange', option);
+  let categories = await fetch('https://flashboxlaunch.herokuapp.com/pricerange', option);
   let data = await categories.text();
   return data;
 }
-
-async function deleteProduct(product_id) {
-  try {
-    let option = {
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json"
-      },
-      method: "delete",
-    };
-    console.log(option);
-    let result = await fetch(
-      `https://medfirst-sx.herokuapp.com/product/${product_id}`,
-      option
-    );
-    return result;
-  } catch (error) {
-    console.log("err", error);
-  }
-}
-
-(function () {
-
-
-
-})();

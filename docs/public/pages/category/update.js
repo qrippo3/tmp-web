@@ -178,7 +178,7 @@ async function updateCategory() {
     };
     console.log(option);
     let response = await fetch(
-      "https://medfirst-sx.herokuapp.com/category",
+      "https://flashboxlaunch.herokuapp.com/category",
       option
     );
     return response;
@@ -197,7 +197,7 @@ async function deleteCategory() {
       method: "delete",
     };
     let result = await fetch(
-      `https://medfirst-sx.herokuapp.com/category/${cateObj.c_id}`,
+      `https://flashboxlaunch.herokuapp.com/category/${cateObj.c_id}`,
       option
     );
 
@@ -216,7 +216,7 @@ async function updatePriceRange(body) {
     method: 'put',
     body: JSON.stringify(body)
   }
-  let categories = await fetch('https://medfirst-sx.herokuapp.com/pricerange', option);
+  let categories = await fetch('https://flashboxlaunch.herokuapp.com/pricerange', option);
   let data = await categories.text();
   return data;
 }
@@ -229,6 +229,6 @@ async function deletePriceRange(c_id) {
     },
     method: 'delete',
   }
-  let response = await fetch(`https://medfirst-sx.herokuapp.com/pricerange/${c_id}`, option);
+  let response = await fetch(`https://flashboxlaunch.herokuapp.com/pricerange/${c_id}`, option);
   return response;
 }

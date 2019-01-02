@@ -15,7 +15,7 @@ var Category;
     this.upper_price = 0;
   };
 }());
-let cateObj = new Category();
+let newCateObj = new Category();
 
 class UI {
 
@@ -64,7 +64,6 @@ class UI {
   }
 }
 
-
 (async function () {
   // debugger;
   let ui = new UI();
@@ -89,9 +88,9 @@ class UI {
       ui.showAlertMsg('所有欄位皆不能為空值', 'alert-danger')
       $("#addSpinner").hide();
     } else {
-      cateObj.name = name;
-      cateObj.mark = mark;
-      cateObj.description = description;
+      newCateObj.name = name;
+      newCateObj.mark = mark;
+      newCateObj.description = description;
       let response = await postCategory();
       let r = JSON.parse(response);
       console.log(r);
@@ -114,18 +113,6 @@ class UI {
     }
   });
 
-  // $('.category-table-body').on('click', '.btn-delete', function () {
-  //   $(this).find('.fa').show();
-  //   let category_id = $(this).data("id");
-  //   deleteCategory(category_id).
-  //   then(response => {
-  //     if (response.status >= 200 && response.status < 300) {
-  //       $(this).parents('tr').first().remove();
-  //     }
-  //     $(this).find('.fa').hide();
-  //   })
-  // });
-
   $('.category-table-body').on('click', '.btn-modify', function () {
     let mark = $(this).closest('tr').find('.c_mark').text() || ' ';
     let name = $(this).closest('tr').find('.c_name').text() || ' ';
@@ -136,7 +123,6 @@ class UI {
     let medium_price = $(this).closest('tr').find('.c_medium_price').text() || ' ';
     let upper_price = $(this).closest('tr').find('.c_upper_price').text() || ' ';
     let range_id = $(this).closest('tr').find('.c_range_id').val() || ' ';
-    console.log(category_id, mark, name, description, image_url);
     window.location.href = `./update.html?category_id=${category_id}&range_id=${range_id}&mark=${mark}&name=${name}&description=${description}&lower_price=${lower_price}&medium_price=${medium_price}&upper_price=${upper_price}&image_url=${encodeURI(image_url)}`;
   })
 
@@ -150,23 +136,12 @@ class UI {
     var uploadTask = storageRef.child('images/' + file.name).put(file, metadata);
     uploadTask.on('state_changed', function (snapshot) {
       $('#addPhotoSpinner').show();
-      var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-      console.log('Upload is ' + progress + '% done');
-      switch (snapshot.state) {
-        case firebase.storage.TaskState.PAUSED: // or 'paused'
-          console.log('Upload is paused');
-          break;
-        case firebase.storage.TaskState.RUNNING: // or 'running'
-          console.log('Upload is running');
-          break;
-      }
     }, function (error) {
-
     }, function () {
       $('#addPhotoSpinner').hide();
       uploadTask.snapshot.ref.getDownloadURL().then(function (downloadURL) {
         $('#cate_img').attr('src', downloadURL);
-        cateObj.image_url = downloadURL;
+        newCateObj.image_url = downloadURL;
       });
     });
   })
@@ -174,10 +149,9 @@ class UI {
 
 async function getCategory() {
   let categories = await fetch(
-    `https://medfirst-sx.herokuapp.com/categories`
+    `https://flashboxlaunch.herokuapp.com/categories`
   );
   let data = await categories.text();
-  console.log(data);
   return data;
 }
 
@@ -191,14 +165,14 @@ async function postCategory() {
       },
       method: "post",
       body: JSON.stringify({
-        name: cateObj.name,
-        mark: cateObj.mark,
-        description: cateObj.description,
-        image_url: cateObj.image_url
+        name: newCateObj.name,
+        mark: newCateObj.mark,
+        description: newCateObj.description,
+        image_url: newCateObj.image_url
       })
     };
     let categories = await fetch(
-      `https://medfirst-sx.herokuapp.com/categories`,
+      `https://flashboxlaunch.herokuapp.com/categories`,
       option
     );
     let data = await categories.text();
@@ -209,7 +183,7 @@ async function postCategory() {
 }
 
 async function getPriceRange() {
-  let categories = await fetch('https://medfirst-sx.herokuapp.com/pricerange');
+  let categories = await fetch('https://flashboxlaunch.herokuapp.com/pricerange');
   let data = await categories.text();
   return data;
 }
@@ -223,7 +197,7 @@ async function createPriceRange(body) {
     method: 'post',
     body: JSON.stringify(body)
   }
-  let categories = await fetch('https://medfirst-sx.herokuapp.com/pricerange', option);
+  let categories = await fetch('https://flashboxlaunch.herokuapp.com/pricerange', option);
   let data = await categories.text();
   return data;
 }
