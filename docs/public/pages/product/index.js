@@ -58,13 +58,20 @@ class UI {
   ui.renderProductList(products);
 
   $('#form-submit').click(event => {
-    $("#addSpinner").show();
     let name = $("#product_name").val();
     let price = $("#price").val();
     let description = $("#description").val();
     let product_code = $('#product_code').val();
     let product_priority_order = $('#product_priority_order').val()
 
+    if (name.length >= 40) {
+      ui.showAlertMsg('品名請勿超過40字', 'alert-danger')
+      return;
+    }
+    if (description.length >= 60) {
+      ui.showAlertMsg('規格說明請勿超過60字', 'alert-danger')
+      return;
+    }
     if (
       typeof name == "undefined" ||
       name == "" ||
@@ -80,9 +87,9 @@ class UI {
       product_priority_order == "" || $('.panel-body li img').length <= 0
     ) {
       console.log('欄位皆不能為空');
-      $("#addSpinner").hide();
       ui.showAlertMsg('欄位皆不能為空', 'alert-danger')
     } else {
+      $("#addSpinner").show();
       let body = {
         "name": name,
         "category_id": category_id,

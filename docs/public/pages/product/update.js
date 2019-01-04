@@ -62,14 +62,22 @@ class UI {
   // });
 
   $("#update-product").click(async function () {
-    $("#addSpinner").show();
     let name = $("#product_name").val();
     let price = $("#price").val();
     let description = $("#description").val();
     let product_code = $('#product_code').val();
     let product_priority_order = $('#product_priority_order').val()
-    console.log(name, price, description, product_code);
+    let product_images = $('.panel-body li img');
+    console.log(name, price, description, product_code, product_images);
 
+    if (name.length >= 40) {
+      ui.showAlertMsg('品名請勿超過40字', 'alert-danger')
+      return;
+    }
+    if (description.length >= 60) {
+      ui.showAlertMsg('規格說明請勿超過60字', 'alert-danger')
+      return;
+    }
     if (
       typeof name == "undefined" ||
       name == "" ||
@@ -82,12 +90,12 @@ class UI {
       typeof product_code === "undefined" ||
       product_code == "" ||
       typeof product_priority_order === "undefined" ||
-      product_priority_order == ""
+      product_priority_order == "" || (product_images.length <=0)
     ) {
       console.log('欄位皆不能為空');
-      $("#addSpinner").hide();
       ui.showAlertMsg('欄位皆不能為空', 'alert-danger')
     } else {
+      $("#addSpinner").show();
       let body = {
         "name": name,
         "product_id": p_id,
@@ -96,8 +104,9 @@ class UI {
         "product_code": product_code,
         "priority_order": parseInt(product_priority_order),
       }
+      debugger;
       let images = [];
-      $('.panel-body li img').each((li_index, item) => {
+      product_images.each((li_index, item) => {
         let image = {};
         let id = $(item).data('id');
         $.each(product.image_urls, function (item_index, element) {
@@ -119,7 +128,7 @@ class UI {
 
       $.each(product.image_urls, function (item_index, element) {
         let exist = false;
-        $('.panel-body li img').each((li_index, item) => {
+        product_images.each((li_index, item) => {
           let id = $(item).data('id');
           if (element.image_id == id) {
             exist = true;
